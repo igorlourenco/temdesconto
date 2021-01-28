@@ -1,18 +1,36 @@
 import React, { useState, useEffect, useContext, createContext } from 'react'
 import firebase from './firebase'
 import { useRouter } from 'next/router'
+import { createStore, createUser } from './database-client'
 
 interface AuthProviderProps {
   children: any
 }
 
+interface Store {
+  email: string
+  password: string
+  name: string
+  businessType: string
+}
+
 const formatUser = async (user: any) => {
+  const token = await user.getIdToken()
   return {
     uid: user?.uid,
     email: user?.email,
     name: user?.displayName,
-    token: user.ya,
+    token,
     photoUrl: user.photoURL
+  }
+}
+
+const formatStore = async (user: any) => {
+  const token = await user.getIdToken()
+  return {
+    uid: user?.uid,
+    email: user?.email,
+    token
   }
 }
 
@@ -25,24 +43,44 @@ const authContext = createContext({
 
 function useProvideAuth () {
   const router = useRouter()
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(null)
 
   const handleUser = async (rawUser: firebase.User) => {
     if (rawUser) {
       const tempUser = await formatUser(rawUser)
 
-      // const {
-      //   token,
-      //   ...userWithoutToken
-      // } = tempUser
+      const {
+        token,
+        ...userWithoutToken
+      } = tempUser
 
       setUser(tempUser)
-      // await createUser(tempUser.uid, userWithoutToken)
+      await createUser(tempUser.uid, userWithoutToken)
 
       return tempUser
     } else {
       setUser(false)
+      return false
+    }
+  }
 
+  const handleStore = async (rawUser: firebase.User, name, businessType) => {
+    if (rawUser) {
+      const tempUser = await formatStore(rawUser)
+
+      const {
+        token,
+        ...userWithoutToken
+      } = tempUser
+
+      console.log(businessType, name)
+
+      setUser(tempUser)
+      await createStore(tempUser.uid, { businessType, name, ...userWithoutToken })
+
+      return tempUser
+    } else {
+      setUser(false)
       return false
     }
   }
@@ -56,15 +94,15 @@ function useProvideAuth () {
       })
   }
 
-  const signInWithEmail = (email: string, password: string) => {
+  const signInWithEmail = (storeData: Store) => {
+    const { email, password, name, businessType } = storeData
     return firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        // Signed in
-        // ...
+      .then(async (response) => {
+        await handleStore(response.user, name, businessType)
       })
   }
 
-  const signOut = async () => {
+  const signOut = () => {
     router.push('/home')
     return firebase
       .auth()
