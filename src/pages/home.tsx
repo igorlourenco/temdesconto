@@ -22,7 +22,7 @@ const Home = () => {
     await auth.signInWithEmail(data)
     alert('cadastrado')
   }
-  console.log(auth.user.token)
+
   return (
    <>
      <Stack as={'form'} onSubmit={handleSubmit(createUser)}>
