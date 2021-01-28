@@ -1,25 +1,26 @@
 import React, { useState, useEffect, useContext, createContext } from 'react'
 import firebase from './firebase'
 import { useRouter } from 'next/router'
+import { createUser } from './database-client'
 
 interface AuthProviderProps {
   children: any
 }
 
 const formatUser = async (user: any) => {
+  const token = await user.getIdToken()
   return {
     uid: user?.uid,
     email: user?.email,
     name: user?.displayName,
-    token: user.ya,
-    photoUrl: user.photoURL
+    photoUrl: user.photoURL,
+    token
   }
 }
 
 const authContext = createContext({
   user: null,
   signInWithGoogle: null,
-  signInWithEmail: null,
   signOut: null
 })
 
@@ -29,17 +30,17 @@ function useProvideAuth () {
 
   const handleUser = async (rawUser: firebase.User) => {
     if (rawUser) {
-      const tempUser = await formatUser(rawUser)
+      const user = await formatUser(rawUser)
 
-      // const {
-      //   token,
-      //   ...userWithoutToken
-      // } = tempUser
+      const {
+        token,
+        ...userWithoutToken
+      } = user
 
-      setUser(tempUser)
-      // await createUser(tempUser.uid, userWithoutToken)
+      setUser(user)
+      await createUser(user.uid, userWithoutToken)
 
-      return tempUser
+      return user
     } else {
       setUser(false)
 
@@ -56,32 +57,18 @@ function useProvideAuth () {
       })
   }
 
-  const signInWithEmail = (email: string, password: string) => {
-    return firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        // Signed in
-        // ...
-      })
-  }
-
   const signOut = async () => {
-    router.push('/home')
     return firebase
       .auth()
       .signOut()
       .then(async () => {
         await handleUser(null)
+        await router.push('/home')
       })
   }
 
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user)
-      } else {
-        setUser(false)
-      }
-    })
+    const unsubscribe = firebase.auth().onAuthStateChanged(handleUser)
 
     return () => unsubscribe()
   }, [])
@@ -89,7 +76,6 @@ function useProvideAuth () {
   return {
     user,
     signInWithGoogle,
-    signInWithEmail,
     signOut
   }
 }
