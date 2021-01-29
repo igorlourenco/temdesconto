@@ -13,13 +13,13 @@ const Home = () => {
   if (!user) {
     return (
       <Button colorScheme={'teal'} onClick={signInWithGoogle}>
-        Quero cadastrar meu estabelecimento!
+        Quer cadastrar sua loja? Faça Login.
       </Button>
     )
   }
 
   return (
-    <Button as={'a'} href={'/cadastrar-loja'}>Continar o cadastro ---3</Button>
+    <Button as={'a'} href={'/cadastrar-loja'}>Cadastre seu estabelecimento</Button>
   )
 }
 
