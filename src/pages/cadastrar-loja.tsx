@@ -28,6 +28,7 @@ const NewStore = () => {
     const newStore = {
       owner: user.name,
       ownerId: user.uid,
+      email: user.email,
       createdAt: new Date().toISOString(),
       ...storeData
     }
