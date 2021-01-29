@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form'
 import { businessCategories } from '../consts'
 import { createStore } from '../library/database-client'
 import { useRouter } from 'next/router'
+import fetcher from '../utilitaries/fetcher'
+import useSWR from 'swr'
 
 const NewStore = () => {
   const router = useRouter()
@@ -16,8 +18,11 @@ const NewStore = () => {
 
   const {
     user,
-    signInWithGoogle
+    signInWithGoogle,
+    signOut
   } = auth
+
+  const { data } = useSWR(user ? ['/api/store', user.token] : null, fetcher)
 
   const handleCreateStore = async (storeData) => {
     const newStore = {
@@ -29,6 +34,15 @@ const NewStore = () => {
 
     await createStore(newStore)
     await router.push('/dashboard')
+  }
+
+  if (data && data.store) {
+    return (
+      <>
+        <Button as={'a'} href={'/dashboard'}>ver sua loja</Button>
+        <Button onClick={signOut}>sair</Button>
+      </>
+    )
   }
 
   if (!user) {
