@@ -30,11 +30,15 @@ const Dashboard = () => {
     return (<h1>saindo...</h1>)
   }
 
-  return (
-      <>
-        <h1>{store.storeName}</h1>
-         <img src={logo} alt={'a'}/>
-      </>)
+  if (store) {
+    return (
+        <>
+          <h1>{store.storeName}</h1>
+          <img src={logo} alt={'a'}/>
+        </>)
+  }
+
+  return (<h1>carregando dados....</h1>)
 }
 
 export default Dashboard
