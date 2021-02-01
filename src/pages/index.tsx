@@ -1,21 +1,42 @@
 import React from 'react'
-import Head from 'next/head'
+import { useAuth } from '../library/auth'
+import { Button } from '@chakra-ui/react'
+import fetcher from '../utilitaries/fetcher'
+import useSWR from 'swr'
 
 const App = () => {
-  return (
+  const auth = useAuth()
+
+  const {
+    user,
+    signInWithGoogle,
+    signOut
+  } = auth
+
+  const { data } = useSWR(user ? ['/api/store', user.token] : null, fetcher)
+
+  if (!user) {
+    return (
+      <Button colorScheme={'teal'} onClick={signInWithGoogle}>
+        Quer cadastrar sua loja? Faça Login.
+      </Button>
+    )
+  }
+
+  if (data && data.store) {
+    return (
       <>
-        <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-          <title>TemDesconto - Apresentação</title>
-
-          <style type="text/css">
-            {'html{ margin: 0; height: 100%; overflow: hidden;  padding: 15px} iframe{ position: absolute; left:0; right:0; bottom:0; top:0; border:0; } '}
-          </style>
-        </Head>
-          <iframe width="100%" height="100%" frameBorder="0"
-                  src="/temdesconto.html"/>
-
+        <Button as={'a'} href={'/dashboard'}>ver sua loja</Button>
+        <Button onClick={signOut}>sair</Button>
       </>
+    )
+  }
+
+  return (
+    <>
+      <Button as={'a'} href={'/cadastrar-loja'}>Cadastre seu estabelecimento</Button>
+      <Button onClick={signOut}>sair</Button>
+    </>
   )
 }
 
