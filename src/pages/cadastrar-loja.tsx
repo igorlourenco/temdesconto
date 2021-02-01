@@ -29,6 +29,7 @@ const NewStore = () => {
       owner: user.name,
       ownerId: user.uid,
       email: user.email,
+      logo: storeData.logo,
       createdAt: new Date().toISOString(),
       ...storeData
     }
@@ -67,6 +68,10 @@ const NewStore = () => {
         <FormControl>
           <FormLabel>Telefone</FormLabel>
           <Input name={'phone'} ref={register({ required: 'Required' })}/>
+        </FormControl>
+        <FormControl>
+          <FormLabel>Logo</FormLabel>
+          <Input type={'file'} name={'logo'} ref={register({ required: 'Required' })}/>
         </FormControl>
         <FormControl>
           <FormLabel color={'teal.900'}>Qual é a categoria da loja?</FormLabel>
