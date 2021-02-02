@@ -1,9 +1,5 @@
 export const businessCategories = [
   {
-    value: null,
-    label: 'Selecione a categoria'
-  },
-  {
     value: 'alimentacao',
     label: 'Alimentação',
     color: 'red'
