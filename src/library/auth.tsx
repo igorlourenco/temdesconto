@@ -63,7 +63,7 @@ function useProvideAuth () {
       .signOut()
       .then(async () => {
         await handleUser(null)
-        await router.push('/home')
+        await router.push('/')
       })
   }
 

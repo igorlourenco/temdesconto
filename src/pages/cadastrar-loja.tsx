@@ -7,6 +7,7 @@ import { createStore } from '../library/database-client'
 import { useRouter } from 'next/router'
 import fetcher from '../utilitaries/fetcher'
 import useSWR from 'swr'
+import Map from '../components/Map'
 
 const NewStore = () => {
   const router = useRouter()
@@ -16,6 +17,9 @@ const NewStore = () => {
 
   const [phoneIsWhatsapp, setPhoneIsWhatsapp] = useState(true)
   const [haveAnotherNumberWhatsapp, setHaveAnotherNumberWhatsapp] = useState(false)
+
+  const [latitude, setLatitude] = useState(-10.1869422)
+  const [longitude, setLongitude] = useState(-48.3362948)
 
   const {
     register,
@@ -31,7 +35,7 @@ const NewStore = () => {
   const { data } = useSWR(user ? ['/api/store', user.token] : null, fetcher)
 
   const handleCreateStore = async (storeData) => {
-    if (storeData.whatsapp === '') {
+    if (phoneIsWhatsapp) {
       storeData.whatsapp = storeData.phone
     }
 
@@ -40,6 +44,9 @@ const NewStore = () => {
       ownerId: user.uid,
       email: user.email,
       logo: storeData.logo,
+      location: {
+        latitude, longitude
+      },
       createdAt: new Date().toISOString(),
       ...storeData
     }
@@ -69,6 +76,12 @@ const NewStore = () => {
 
   const handleUploadLogo = () => {
     inputUploader.current.click()
+  }
+
+  const onClickMap = (event) => {
+    const { lngLat } = event
+    setLatitude(lngLat.lat)
+    setLongitude(lngLat.lng)
   }
 
   return (
@@ -141,6 +154,14 @@ const NewStore = () => {
             }/>
             <FormHelperText>Pro visual ficar legal, recomendamos que a imagem tenha tamanho de 500x500 pixels</FormHelperText>
             <FormHelperText><Link href={'https://www.canva.com/'} isExternal>Não tem logo? Crie uma grátis.</Link></FormHelperText>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Qual é o endereço do seu estabelecimento?</FormLabel>
+            <Input borderColor={'orange.500'} name={'address'} ref={register({ required: 'Required' })}/>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Indique no mapa o local aproximado (seus clientes agradecem)</FormLabel>
+            <Map latitude={latitude} longitude={longitude} onClick={onClickMap}/>
           </FormControl>
           <Button colorScheme={'orange'} type={'submit'}>Finalizar cadastro</Button>
         </Stack>

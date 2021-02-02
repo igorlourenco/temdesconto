@@ -21,16 +21,16 @@ const Dashboard = () => {
 
   const { store } = data
 
-  firebase.storage().ref().child(`stores/${store.logo}`).getDownloadURL().then((url) => {
-    setLogo(url)
-  })
-
   if (!store) {
-    router.push('/home')
+    router.push('/')
     return (<h1>saindo...</h1>)
   }
 
   if (store) {
+    firebase.storage().ref().child(`stores/${store.logo}`).getDownloadURL().then((url) => {
+      setLogo(url)
+    })
+
     return (
         <>
           <h1>{store.storeName}</h1>
