@@ -14,9 +14,9 @@ const GradientButton = (props: ButtonProps) => {
           textAlign="center"
           fontFamily="Yusei Magic"
           textTransform={'uppercase'}
-          bgGradient="linear-gradient(270deg, #DD6B20 0%, #F6AD55 100%)"
+          bgGradient="linear-gradient(60deg, orange.500 0%, yellow.400 100%)"
           _hover={{
-            bgGradient: 'linear-gradient(200deg, #DD6B20 0%, #F6AD55 100%)'
+            bgGradient: 'linear-gradient(20deg, #DD6B20 0%, #F6AD55 100%)'
           }}
           {...props}
       >

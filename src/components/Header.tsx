@@ -103,7 +103,9 @@ const Header = () => {
           justifyContent="flex-start"
           isInline
       >
-        <Heading marginLeft={22} marginTop={5} zIndex={3} position={'absolute'} width={'50%'}>TemDesconto.club</Heading>
+        <Heading marginLeft={22} marginTop={5} zIndex={3} position={'absolute'}
+                 bgGradient="linear-gradient(20deg, orange.500 0%, orange.300 100%)"
+                 bgClip="text" fontWeight={'extrabold'}>TemDesconto.club</Heading>
         <Stack spacing={0} width={'100%'}>
           <Menu/>
         </Stack>
