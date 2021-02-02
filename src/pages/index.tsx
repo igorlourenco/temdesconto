@@ -3,6 +3,7 @@ import { useAuth } from '../library/auth'
 import { Button } from '@chakra-ui/react'
 import fetcher from '../utilitaries/fetcher'
 import useSWR from 'swr'
+import Header from '../components/Header'
 
 const App = () => {
   const auth = useAuth()
@@ -17,15 +18,17 @@ const App = () => {
 
   if (!user) {
     return (
-      <Button colorScheme={'teal'} onClick={signInWithGoogle}>
-        Quer cadastrar sua loja? Faça Login.
-      </Button>
+        <>
+          <Header/>
+
+        </>
     )
   }
 
   if (data && data.store) {
     return (
       <>
+        <Header/>
         <Button as={'a'} href={'/dashboard'}>ver sua loja</Button>
         <Button onClick={signOut}>sair</Button>
       </>
@@ -34,6 +37,7 @@ const App = () => {
 
   return (
     <>
+
       <Button as={'a'} href={'/cadastrar-loja'}>Cadastre seu estabelecimento</Button>
       <Button onClick={signOut}>sair</Button>
     </>
