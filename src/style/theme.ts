@@ -9,8 +9,8 @@ const colors = {
 }
 
 const fonts = {
-  heading: '\'Lato\', sans-serif',
-  body: '\'Lato\', sans-serif',
+  heading: '\'Varela Round\', sans-serif',
+  body: '\'Varela Round\', sans-serif',
   mono: '\'Menlo\', monospace'
 }
 
