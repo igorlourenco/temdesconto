@@ -7,16 +7,18 @@ const GradientButton = (props: ButtonProps) => {
       <Button
           variant="solid"
           size="md"
-          padding={5}
+          padding={3}
           borderRadius={0}
-          color="#333"
+          color="#fffafa"
           fontWeight="bold"
+          letterSpacing={1.005}
           textAlign="center"
-          fontFamily="Yusei Magic"
+          fontFamily="Baloo Chettan 2"
+          shadow={'md'}
           textTransform={'uppercase'}
-          bgGradient="linear-gradient(60deg, orange.500 0%, yellow.400 100%)"
+          bgGradient="linear-gradient(60deg, orange.500 0%, orange.400 100%)"
           _hover={{
-            bgGradient: 'linear-gradient(20deg, #DD6B20 0%, #F6AD55 100%)'
+            bgGradient: 'linear-gradient(20deg, orange.500 0%, orange.400 100%)'
           }}
           {...props}
       >

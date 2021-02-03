@@ -7,7 +7,7 @@ const LoginButton = (props: ButtonProps) => {
   const { signInWithGoogle } = useAuth()
 
   return (
-      <GradientButton colorScheme={'teal'} onClick={signInWithGoogle} {...props}>
+      <GradientButton onClick={signInWithGoogle} {...props}>
         {props.children}
       </GradientButton>
   )

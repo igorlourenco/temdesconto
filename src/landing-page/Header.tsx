@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Heading, Stack, Link, IconButton, useDisclosure, StackProps } from '@chakra-ui/react'
 import { HiMenuAlt3, HiX } from 'react-icons/hi'
-import LoginButton from './LoginButton'
+import LoginButton from '../components/LoginButton'
 
 interface MenuItemProps {
   label: string,
@@ -37,12 +37,12 @@ const MenuContainer = (props: StackProps) => {
           spacing={5}
           justifyContent="flex-end"
           alignItems="center"
-          p={4}
+          padding={3}
           marginRight={12}
           width={'100%'}
           z-index={-9999}
           position={'relative'}
-          boxShadow="2xl"
+          boxShadow="xl"
           {...props}
       >
         {props.children}
@@ -54,7 +54,7 @@ const Menu = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
-      <Stack justifyContent={'flex-end'}>
+      <Stack justifyContent={'center'}>
         <MenuContainer display={{ md: !isOpen ? 'none' : 'block' }}>
           <Stack alignItems={'flex-end'}>
             <IconButton
@@ -75,7 +75,7 @@ const Menu = () => {
                 <MenuItem key={index} label={item.label} link={item.link}/>
             ))
           }
-          <LoginButton>Entre em Contato</LoginButton>
+          <LoginButton>Conquiste seus clientes</LoginButton>
         </MenuContainer>
 
         {isOpen
@@ -103,7 +103,7 @@ const Header = () => {
           justifyContent="flex-start"
           isInline
       >
-        <Heading marginLeft={22} marginTop={5} zIndex={3} position={'absolute'}
+        <Heading marginLeft={22} marginTop={3} zIndex={3} position={'absolute'}
                  bgGradient="linear-gradient(20deg, orange.500 0%, orange.300 100%)"
                  bgClip="text" fontWeight={'extrabold'}>TemDesconto.club</Heading>
         <Stack spacing={0} width={'100%'}>
