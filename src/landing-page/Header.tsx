@@ -41,7 +41,6 @@ const MenuContainer = (props: StackProps) => {
           marginRight={12}
           width={'100%'}
           z-index={-9999}
-          position={'relative'}
           boxShadow="xl"
           {...props}
       >
@@ -102,6 +101,9 @@ const Header = () => {
           spacing={0}
           justifyContent="flex-start"
           isInline
+          backgroundColor={'white'}
+          position='sticky'
+          top={'0'}
       >
         <Heading marginLeft={22} marginTop={3} zIndex={3} position={'absolute'}
                  bgGradient="linear-gradient(20deg, orange.500 0%, orange.300 100%)"
