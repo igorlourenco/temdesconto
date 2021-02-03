@@ -20,7 +20,7 @@ const Home = () => (
       width={['100%', '100%', '90%', '85%']}
       p={5}
     >
-      <Stack spacing={5} justifyContent="space-around" alignItems="flex-start">
+      <Stack spacing={8} justifyContent="space-around" alignItems="flex-start">
         <Heading fontSize={[33, 39, 47, 57]} color={'#020E35'} fontFamily={'Baloo Chettan 2'}>
           Quer aumentar sua base de clientes e melhorar a relação com eles?
         </Heading>

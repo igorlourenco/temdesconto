@@ -87,7 +87,7 @@ const Menu = () => {
                           <MenuItem key={index} label={item.label} link={item.link}/>
                       ))
                     }
-                    <LoginButton>Entre em Contato</LoginButton>
+                    <LoginButton>Conquiste seus clientes</LoginButton>
                   </MenuContainer>
                 </Box>
             )
